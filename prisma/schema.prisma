@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model DayLog {
+  id             Int         @id @default(autoincrement())
+  date           String      @unique
+  createdAt      DateTime    @default(now())
+  foods          FoodEntry[]
+  weight         Float?
+  stravaCalories Int?
+  stravaActivity String?
+}
+
+model FoodEntry {
+  id        Int     @id @default(autoincrement())
+  dayLogId  Int
+  dayLog    DayLog  @relation(fields: [dayLogId], references: [id])
+  name      String
+  calories  Int
+  source    String
+  sourceUrl String?
+  loggedAt  String
+  fromPhoto Boolean @default(false)
+}
