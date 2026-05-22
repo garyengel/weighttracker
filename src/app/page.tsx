@@ -31,7 +31,7 @@ export default function Home() {
   useEffect(() => { fetchWeightLogs() }, [fetchWeightLogs])
 
   return (
-    <main style={{ minHeight: '100vh', background: '#f5f5f5', padding: '16px 16px 40px', display: 'flex', justifyContent: 'center' }}>
+    <main style={{ minHeight: '100vh', background: '#1c1c1e', padding: '16px 16px 40px', display: 'flex', justifyContent: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 680 }}>
         <WeekCalendar selectedDate={selectedDate} onDateChange={setSelectedDate} />
         <CalorieCard dayLog={dayLog} selectedDate={selectedDate} onRefresh={refresh} />

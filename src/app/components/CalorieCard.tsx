@@ -25,7 +25,7 @@ export default function CalorieCard({ dayLog, selectedDate, onRefresh }: Calorie
   const remaining = total - consumed
 
   const chartData = {
-    datasets: [{ data: consumed > 0 || remaining > 0 ? [consumed, remaining > 0 ? remaining : 0] : [0, 1], backgroundColor: consumed > 0 || remaining > 0 ? ['#E24B4A', '#378ADD'] : ['#e5e7eb', '#e5e7eb'], borderWidth: 0 }],
+    datasets: [{ data: consumed > 0 || remaining > 0 ? [consumed, remaining > 0 ? remaining : 0] : [0, 1], backgroundColor: consumed > 0 || remaining > 0 ? ['#E24B4A', '#378ADD'] : ['#3a3a3c', '#3a3a3c'], borderWidth: 0 }],
   }
 
   const pullStrava = async () => {
@@ -41,35 +41,38 @@ export default function CalorieCard({ dayLog, selectedDate, onRefresh }: Calorie
   }
 
   return (
-    <div style={{ background: 'white', border: '0.5px solid #e5e7eb', borderRadius: 12, overflow: 'hidden' }}>
-      <div style={{ padding: '10px 14px', borderBottom: '0.5px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: 12, fontWeight: 500 }}>Calories — {formatDate(selectedDate)}</span>
-        <span style={{ fontSize: 10, borderRadius: 4, padding: '2px 7px', background: '#E1F5EE', color: '#085041' }}>{remaining} remaining</span>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 12, alignItems: 'center', padding: '12px 14px' }}>
-        <div style={{ position: 'relative', width: 100, height: 100, flexShrink: 0 }}>
-          <Doughnut data={chartData} options={{ responsive: false, cutout: '72%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, animation: false }} width={100} height={100} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ fontSize: 20, fontWeight: 500, color: '#378ADD', lineHeight: 1 }}>{remaining}</div>
-            <div style={{ fontSize: 9, color: '#9ca3af' }}>remaining</div>
+    <div style={{ background: '#2c2c2e', borderRadius: 12, overflow: 'hidden' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: 0, alignItems: 'center' }}>
+        {/* Donut chart */}
+        <div style={{ padding: '16px 12px 16px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', width: 90, height: 90, flexShrink: 0 }}>
+            <Doughnut data={chartData} options={{ responsive: false, cutout: '74%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, animation: false }} width={90} height={90} />
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ fontSize: 20, fontWeight: 600, color: '#378ADD', lineHeight: 1 }}>{remaining}</div>
+              <div style={{ fontSize: 9, color: '#636366' }}>remaining</div>
+            </div>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 5 }}>
-          {[['Base', '1,115', '#378ADD'], ['Ride earned', rideEarned > 0 ? `+${rideEarned}` : 'no activity', rideEarned > 0 ? '#1D9E75' : '#9ca3af'], ['Consumed', String(consumed), '#E24B4A'], ['Total budget', total.toLocaleString(), 'inherit']]
+        {/* Stats grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, padding: '1px 1px 1px 0', background: '#1c1c1e' }}>
+          {([['Base', '1,115', '#378ADD'], ['Ride earned', rideEarned > 0 ? `+${rideEarned}` : 'no activity', rideEarned > 0 ? '#30d158' : '#636366'], ['Consumed', String(consumed), '#E24B4A'], ['Total budget', total.toLocaleString(), '#f5f5f5']] as [string, string, string][])
             .map(([label, value, color]) => (
-              <div key={label} style={{ background: '#f9fafb', borderRadius: 6, padding: '6px 8px' }}>
-                <div style={{ fontSize: 9, color: '#9ca3af' }}>{label}</div>
-                <div style={{ fontSize: 14, fontWeight: 500, color }}>{value}</div>
+              <div key={label} style={{ background: '#2c2c2e', padding: '10px 12px' }}>
+                <div style={{ fontSize: 10, color: '#636366', marginBottom: 2 }}>{label}</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color }}>{value}</div>
               </div>
             ))}
         </div>
       </div>
-      <button onClick={pullStrava} disabled={loading}
-        style={{ margin: '0 14px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, border: '0.5px solid #378ADD', borderRadius: 6, padding: '6px 10px', color: '#378ADD', fontSize: 11, background: 'none', cursor: loading ? 'not-allowed' : 'pointer', width: 'calc(100% - 28px)' }}>
-        <span style={{ width: 6, height: 6, borderRadius: '50%', background: loading ? '#d1d5db' : '#1D9E75', flexShrink: 0, display: 'inline-block' }} />
-        {loading ? 'Pulling activity…' : "Pull today's Strava activity"}
-      </button>
-      {stravaMsg && <p style={{ margin: '0 14px 10px', fontSize: 10, color: '#6b7280', textAlign: 'center' }}>{stravaMsg}</p>}
+      {/* Strava button */}
+      <div style={{ borderTop: '1px solid #1c1c1e' }}>
+        <button onClick={pullStrava} disabled={loading}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, border: 'none', padding: '13px 16px', color: '#f5f5f5', fontSize: 13, background: '#2c2c2e', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'inherit', opacity: loading ? 0.6 : 1 }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: loading ? '#636366' : '#30d158', flexShrink: 0, display: 'inline-block' }} />
+          {loading ? 'Pulling activity…' : "Pull today's Strava activity"}
+        </button>
+      </div>
+      {stravaMsg && <p style={{ margin: '0 16px 12px', fontSize: 11, color: '#8e8e93', textAlign: 'center' }}>{stravaMsg}</p>}
     </div>
   )
 }

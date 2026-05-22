@@ -25,24 +25,24 @@ export default function WeightHero({ weightLogs }: WeightHeroProps) {
   }
 
   return (
-    <div style={{ background: '#042C53', borderRadius: 12, padding: '14px 16px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10 }}>
+    <div style={{ background: '#2c2c2e', borderRadius: 12, padding: '14px 16px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 12 }}>
         <div>
-          <div style={{ fontSize: 28, fontWeight: 500, color: '#fff', lineHeight: 1 }}>{currentWeight !== null ? `${currentWeight.toFixed(1)} lbs` : '-- lbs'}</div>
-          <div style={{ fontSize: 10, color: '#85B7EB', marginTop: 3 }}>current weight</div>
+          <div style={{ fontSize: 28, fontWeight: 600, color: '#f5f5f5', lineHeight: 1 }}>{currentWeight !== null ? `${currentWeight.toFixed(1)} lbs` : '-- lbs'}</div>
+          <div style={{ fontSize: 10, color: '#636366', marginTop: 4 }}>current weight</div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: 13, color: '#1D9E75' }}>Goal: {goalWeight} lbs</div>
-          <div style={{ fontSize: 10, color: '#85B7EB', marginTop: 2 }}>est. {eta} at this pace</div>
+          <div style={{ fontSize: 13, color: '#30d158', fontWeight: 500 }}>Goal: {goalWeight} lbs</div>
+          <div style={{ fontSize: 10, color: '#636366', marginTop: 2 }}>est. {eta} at this pace</div>
         </div>
       </div>
-      <div style={{ height: 8, background: 'rgba(255,255,255,0.12)', borderRadius: 4, marginBottom: 5 }}>
-        <div style={{ height: '100%', width: `${progressPct}%`, background: '#1D9E75', borderRadius: 4 }} />
+      <div style={{ height: 6, background: '#3a3a3c', borderRadius: 3, marginBottom: 6 }}>
+        <div style={{ height: '100%', width: `${progressPct}%`, background: '#30d158', borderRadius: 3, transition: 'width 0.4s ease' }} />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: '#85B7EB' }}>
-        <span>{startingWeight}</span>
-        <span style={{ color: '#1D9E75' }}>{lostSoFar > 0 ? lostSoFar.toFixed(1) : '0'} of {totalToLose} lbs lost</span>
-        <span>{goalWeight}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#636366' }}>
+        <span>{startingWeight} lbs</span>
+        <span style={{ color: '#30d158' }}>{lostSoFar > 0 ? lostSoFar.toFixed(1) : '0'} of {totalToLose} lbs lost</span>
+        <span>{goalWeight} lbs</span>
       </div>
     </div>
   )

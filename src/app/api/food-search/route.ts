@@ -20,18 +20,5 @@ export async function GET(req: NextRequest) {
     }
   } catch { /* ignore */ }
 
-  if (results.length < 3) {
-    try {
-      const appId = process.env.NUTRITIONIX_APP_ID
-      const appKey = process.env.NUTRITIONIX_API_KEY
-      if (appId && appKey) {
-        const res = await fetch(`https://trackapi.nutritionix.com/v2/search/instant?query=${encodeURIComponent(query)}`, { headers: { 'x-app-id': appId, 'x-app-key': appKey } })
-        const data = await res.json()
-        const items = [...(data.branded || []), ...(data.common || [])].slice(0, 5 - results.length)
-        for (const item of items) results.push({ name: item.food_name, calories: item.nf_calories ? Math.round(item.nf_calories) : null, servingSize: item.serving_unit ? `${item.serving_qty} ${item.serving_unit}` : null, source: 'Nutritionix', sourceUrl: 'https://www.nutritionix.com' })
-      }
-    } catch { /* ignore */ }
-  }
-
   return NextResponse.json(results.slice(0, 5))
 }
